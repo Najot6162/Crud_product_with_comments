@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Task 1</title>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
 </head>
 <body>
-
 <div class="container mt-2">
-
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -52,18 +49,14 @@
                    @endforeach
                 <td>
                     <form action="{{ route('products.destroy',$product->id) }}" method="POST">
-
                         <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
                         @csrf
                         @method('DELETE')
-
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                     <form action="{{ route('comments.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-
                         <div class="row">
-
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <h2>Add Comment</h2>
                                 <div class="form-group">
@@ -108,14 +101,21 @@
             <th>Price</th>
             <th>Product name</th>
         </tr>
+
+        @php
+            $i = 1;
+        @endphp
+
         @foreach ($comments as $comment)
             <tr>
-                <td>{{ $comment->id }}</td>
+                <td>{{ $i}}</td>
                 <td>{{ $comment->name }}</td>
                 <td>{{ $comment->message }}</td>
                 <td>{{ $comment->product->name }}</td>
             </tr>
-
+            @php
+                $i++;
+            @endphp
         @endforeach
     </table>
 </body>

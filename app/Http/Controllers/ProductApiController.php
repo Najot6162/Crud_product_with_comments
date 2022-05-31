@@ -16,15 +16,11 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-
-//        $product = product::paginate(10);
-
-        $product = Product::with('comment')->first();
-        if ($product==null){
+        $product = Product::with('comments')->paginate(5);
+        if ($product == null) {
             return "Empty array!.";
         }
-        dd($product->toArray());
-
+//        dd($product->toArray());
         return ProductResource::collection($product);
     }
 
@@ -41,7 +37,7 @@ class ProductApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,7 +45,7 @@ class ProductApiController extends Controller
         $request->validate([
             'name' => 'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'price'=>'required',
+            'price' => 'required',
             'description' => 'required',
         ]);
 
@@ -62,8 +58,7 @@ class ProductApiController extends Controller
         $product->image = $path;
         $product->description = $request->description;
 
-        if($product->save())
-        {
+        if ($product->save()) {
             return new ProductResource($product);
         }
     }
@@ -71,7 +66,7 @@ class ProductApiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -84,7 +79,7 @@ class ProductApiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -95,8 +90,8 @@ class ProductApiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -104,13 +99,13 @@ class ProductApiController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'price'=>'required',
+            'price' => 'required',
             'description' => 'required',
         ]);
 
         $product = Product::find($id);
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $request->validate([
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
@@ -122,8 +117,7 @@ class ProductApiController extends Controller
         $product->price = $request->price;
         $product->description = $request->description;
 
-        if($product->save())
-        {
+        if ($product->save()) {
             return new ProductResource($product);
         }
 
@@ -132,14 +126,13 @@ class ProductApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        if($product->delete())
-        {
+        if ($product->delete()) {
             return new ProductResource($product);
         }
     }

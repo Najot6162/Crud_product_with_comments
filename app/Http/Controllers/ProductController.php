@@ -15,8 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data['products'] = Product::orderBy('id','desc')->paginate(5);
-        $comment['comments'] = Comment::orderBy('product_id','desc')->paginate(5);
+        $data['products'] = Product::orderBy('id','asc')->paginate(5);
+        $comment['comments'] = Comment::orderBy('product_id','asc')->paginate(5);
 
         $comments = Comment::all();
 
