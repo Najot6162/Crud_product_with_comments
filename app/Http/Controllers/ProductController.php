@@ -18,7 +18,9 @@ class ProductController extends Controller
         $data['products'] = Product::orderBy('id','desc')->paginate(5);
         $comment['comments'] = Comment::orderBy('product_id','desc')->paginate(5);
 
-        return view('products.index', $data, $comment);
+        $comments = Comment::all();
+
+        return view('products.index', $data, $comment, $comments);
     }
 
     /**

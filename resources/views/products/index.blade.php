@@ -47,12 +47,9 @@
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->description }}</td>
 
-                <td> @foreach($comments as $comment)
-                        @if($product->id === $comment->product_id)
-                            {{ $comment->message }} <br>
-                        @endif
-                @endforeach
-                </td>
+                <td>@foreach($product->comments as $comment)
+                        {{ $comment->message }}
+                   @endforeach
                 <td>
                     <form action="{{ route('products.destroy',$product->id) }}" method="POST">
 
@@ -104,5 +101,22 @@
 
 {!! $products->links() !!}
 
+    <table class="table table-bordered">
+        <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Product name</th>
+        </tr>
+        @foreach ($comments as $comment)
+            <tr>
+                <td>{{ $comment->id }}</td>
+                <td>{{ $comment->name }}</td>
+                <td>{{ $comment->message }}</td>
+                <td>{{ $comment->product->name }}</td>
+            </tr>
+
+        @endforeach
+    </table>
 </body>
 </html>

@@ -16,6 +16,6 @@ class Comment extends Model
     ];
 
     public function product(){
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
 }
